@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassBoard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>ClassBoard</h2>
+        </div>
+
+        <ul>
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </li>
+
+            <li>
+                <i class="fa-solid fa-book"></i>
+                Subjects
+            </li>
+
+            <li>
+                <i class="fa-solid fa-upload"></i>
+                Upload
+            </li>
+
+            <li>
+                <i class="fa-solid fa-download"></i>
+                Downloads
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <!-- Navbar -->
+
+        <div class="navbar">
+
+            <input
+                type="text"
+                id="searchBox"
+                placeholder="Search Files...">
+
+            <div class="profile">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <div class="avatar">
+                    XP
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Hero -->
+
+        <div class="hero">
+
+            <h1>
+                Welcome Xtremerpie 👋
+            </h1>
+
+            <p>
+                Upload and download classroom files instantly.
+            </p>
+
+            <button>
+                Get Started
+            </button>
+
+        </div>
+
+        <!-- Subject Cards -->
+
+        <div class="cards">
+
+            <div class="card">
+                <h2>Physics</h2>
+                <p>Files</p>
+            </div>
+
+            <div class="card">
+                <h2>Chemistry</h2>
+                <p>Files</p>
+            </div>
+
+            <div class="card">
+                <h2>Mathematics</h2>
+                <p>Files</p>
+            </div>
+
+            <div class="card">
+                <h2>English</h2>
+                <p>Files</p>
+            </div>
+
+        </div>
+
+        <!-- Upload -->
+
+        <h2 class="title">Upload File</h2>
+
+        <div class="upload-box">
+
+            <input type="file" id="fileInput">
+
+            <button id="uploadBtn">
+
+                <i class="fa-solid fa-upload"></i>
+
+                Upload
+
+            </button>
+
+        </div>
+
+        <!-- Files -->
+
+        <h2 class="title">
+
+            Uploaded Files
+
+        </h2>
+
+        <div id="fileList">
+
+        </div>
+
+    </div>
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
