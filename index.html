@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ClassBoard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="centered-page">
+    <div class="card center" style="padding: 48px 40px; max-width: 380px;">
+      <div class="brand-mark" style="margin: 0 auto 18px; width:48px;height:48px;font-size:22px;">🎓</div>
+      <h1 style="font-size: 22px; margin-bottom: 8px;">ClassBoard</h1>
+      <p style="margin-bottom: 24px;">Loading your classroom…</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script>
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      window.location.href = data.session ? "dashboard.html" : "login.html";
+    })();
+  </script>
+</body>
+</html>

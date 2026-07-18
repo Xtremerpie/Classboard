@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in · ClassBoard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="centered-page">
+    <div class="card" style="padding: 40px; width: 100%; max-width: 400px;">
+      <div class="center" style="margin-bottom: 26px;">
+        <div class="brand-mark" style="margin: 0 auto 14px; width:44px;height:44px;font-size:20px;">🎓</div>
+        <h1 style="font-size: 20px;">Welcome to ClassBoard</h1>
+        <p style="margin-top: 6px; font-size: 13px;">Sign in to reach your classroom.</p>
+      </div>
+
+      <div class="role-switch">
+        <button type="button" id="tab-signin" class="active">Sign in</button>
+        <button type="button" id="tab-signup">Create account</button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <form id="signin-form">
+        <div class="field">
+          <label for="si-email">Email</label>
+          <input id="si-email" type="email" required autocomplete="email" placeholder="you@school.edu" />
+        </div>
+        <div class="field">
+          <label for="si-password">Password</label>
+          <input id="si-password" type="password" required autocomplete="current-password" placeholder="••••••••" />
+        </div>
+        <p class="error-text" id="si-error"></p>
+        <button type="submit" class="btn btn-primary btn-block" id="si-submit">Sign in</button>
+      </form>
+
+      <!-- SIGN UP FORM -->
+      <form id="signup-form" style="display:none;">
+        <div class="role-switch" style="margin-bottom: 18px;">
+          <button type="button" class="role-pick active" data-role="student">Student</button>
+          <button type="button" class="role-pick" data-role="teacher">Teacher</button>
+        </div>
+        <div class="field">
+          <label for="su-name">Full name</label>
+          <input id="su-name" type="text" required placeholder="Your name" />
+        </div>
+        <div class="field" id="roll-field">
+          <label for="su-roll">Roll number <span class="muted">(students)</span></label>
+          <input id="su-roll" type="text" placeholder="e.g. 24" />
+        </div>
+        <div class="field">
+          <label for="su-email">Email</label>
+          <input id="su-email" type="email" required autocomplete="email" placeholder="you@school.edu" />
+        </div>
+        <div class="field">
+          <label for="su-password">Password</label>
+          <input id="su-password" type="password" required minlength="6" autocomplete="new-password" placeholder="At least 6 characters" />
+        </div>
+        <p class="error-text" id="su-error"></p>
+        <button type="submit" class="btn btn-primary btn-block" id="su-submit">Create account</button>
+      </form>
+
+      <p class="muted center mt-24" style="font-size:12px;">
+        First time setting this up? See the README for Supabase configuration.
+      </p>
+    </div>
+  </div>
+
+  <div id="toast-stack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async () => {
+      const session = await getSession();
+      if (session) window.location.href = "dashboard.html";
+    })();
+
+    const tabSignin = document.getElementById("tab-signin");
+    const tabSignup = document.getElementById("tab-signup");
+    const signinForm = document.getElementById("signin-form");
+    const signupForm = document.getElementById("signup-form");
+
+    tabSignin.addEventListener("click", () => {
+      tabSignin.classList.add("active");
+      tabSignup.classList.remove("active");
+      signinForm.style.display = "block";
+      signupForm.style.display = "none";
+    });
+    tabSignup.addEventListener("click", () => {
+      tabSignup.classList.add("active");
+      tabSignin.classList.remove("active");
+      signupForm.style.display = "block";
+      signinForm.style.display = "none";
+    });
+
+    let selectedRole = "student";
+    document.querySelectorAll(".role-pick").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".role-pick").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedRole = btn.dataset.role;
+        document.getElementById("roll-field").style.display = selectedRole === "student" ? "flex" : "none";
+      });
+    });
+
+    signinForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("si-submit");
+      const errorEl = document.getElementById("si-error");
+      errorEl.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Signing in…";
+      try {
+        await signIn({
+          email: document.getElementById("si-email").value.trim(),
+          password: document.getElementById("si-password").value,
+        });
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        errorEl.textContent = err.message || "Could not sign in.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Sign in";
+      }
+    });
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("su-submit");
+      const errorEl = document.getElementById("su-error");
+      errorEl.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Creating account…";
+      try {
+        await signUp({
+          fullName: document.getElementById("su-name").value.trim(),
+          email: document.getElementById("su-email").value.trim(),
+          password: document.getElementById("su-password").value,
+          role: selectedRole,
+          rollNumber: document.getElementById("su-roll").value.trim(),
+        });
+        showToast("Account created — check your email to confirm, then sign in.");
+        tabSignin.click();
+      } catch (err) {
+        errorEl.textContent = err.message || "Could not create account.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Create account";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "classboard",
+  "version": "0.1.0",
+  "description": "ClassBoard — smart classroom file sharing & learning platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Upload · ClassBoard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><div class="brand-mark">🎓</div>ClassBoard</div>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="announcements.html">Announcements</a>
+      <a href="upload.html" class="active">Upload</a>
+    </nav>
+    <div class="user-chip" id="user-chip"></div>
+  </div>
+
+  <div class="page" style="max-width: 640px;">
+    <h1 style="font-size: 26px;">Upload a file</h1>
+    <p style="margin-top: 6px;">Students see new files instantly once uploaded.</p>
+
+    <form id="upload-form" class="card mt-24" style="padding: 28px;">
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="file-input" hidden />
+        <div class="dz-icon">📤</div>
+        <div class="dz-title" id="dz-label">Click to choose a file, or drag it here</div>
+        <div class="dz-sub">PDF, PPT, DOCX, images, video, audio, zip, or code files</div>
+      </div>
+
+      <div class="field mt-24">
+        <label for="subject-select">Subject</label>
+        <select id="subject-select" required>
+          <option value="">Select a subject…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="chapter-input">Chapter / label <span class="muted">(optional)</span></label>
+        <input id="chapter-input" type="text" placeholder="e.g. Chapter 2 — Numericals" />
+      </div>
+
+      <p class="error-text" id="upload-error"></p>
+      <button type="submit" class="btn btn-primary btn-block" id="upload-submit" disabled>Upload file</button>
+    </form>
+  </div>
+
+  <div id="toast-stack"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/upload.js"></script>
+</body>
+</html>
